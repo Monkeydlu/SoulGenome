@@ -6,9 +6,11 @@
 //  Copyright (c) 2013 Vanderbilt University. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "cocos2d.h"
 @class PhysicalEquipment;
-@class PhysicalSkill;
+@class PhysicalBasicSkill;
+@class PhysicalActiveSkill;
+@class PhysicalPassiveSkill;
 
 @interface JobClassesInfoBox : NSObject{
 	
@@ -16,7 +18,8 @@
 
 //function that returns an array of the skills
 //a class can learn. 
--(NSArray*)GetSkillsLearnableOfClass:(NSNumber*)classTag;
--(NSArray*)GetClassStatInfoOfClass:(NSNumber*)classTag;
--(NSArray*)GetStartingEquipmentOfClass:(NSNumber*)classTag;
+-(NSMutableArray*)GetSkillsLearnableOfClass:(int)classTag whileType:(int)typeTag;
+-(NSArray*)GetClassStatInfoOfClass:(int)classTag;
+-(NSArray*)GetStartingEquipmentOfClass:(int)classTag;
+-(ccColor3B)getSoulColor:(int)classTag;
 @end

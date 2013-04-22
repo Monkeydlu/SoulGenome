@@ -9,6 +9,7 @@
 #import "CharacterSelectionScreen.h"
 #import "PhysicalCharacter.h"
 #import "GameScene.h"
+#import "JobClassesInfoBox.h"
 
 @implementation CharacterSelectionScreenSceen
 @synthesize Layer1 = Layer1;
@@ -274,6 +275,13 @@
 
 @end
 
+//===========================================================//
+//===========================================================//
+//===========================================================//
+//======================class select layer===================//
+//===========================================================//
+//===========================================================//
+//===========================================================//
 
 
 @implementation ClassSelectLayer
@@ -297,8 +305,8 @@
 																	 target:self
 																   selector:@selector(FemaleSelected)];
 		
-		CCMenuItemImage * AffinityImage = [CCMenuItemImage itemFromNormalImage:@"PortraitBorder.png" 
-																 selectedImage:@"PortraitBorder.png"
+		CCMenuItemImage * AffinityImage = [CCMenuItemImage itemFromNormalImage:@"Blank.png" 
+																 selectedImage:@"Blank.png"
 																		target:self
 																	  selector:@selector(DoNothing)];
 		
@@ -314,10 +322,14 @@
 		
 		FemaleCharacterSquare = [CCSprite spriteWithFile:@"DefenderFemaleSquare.png"];
 		MaleCharacterSquare = [CCSprite spriteWithFile:@"DefenderMaleSquare.png"];
-		ClassAffinities = [CCSprite spriteWithFile:@"DefenderAffinity.png"];
+		ClassAffinities = [CCSprite spriteWithFile:@"SoulOrb.png"];
+		
 		[FemaleCharacterSquare setPosition:ccp(130, 220)];
 		[MaleCharacterSquare setPosition:ccp(350, 220)];
 		[ClassAffinities setPosition:ccp(240, 220)];
+		JobClassesInfoBox * infoBox = [[JobClassesInfoBox alloc] init];
+		ClassAffinities.color = [infoBox getSoulColor:1];
+		
 		[self addChild:FemaleCharacterSquare z:7];
 		[self addChild:MaleCharacterSquare z:7];
 		[self addChild:ClassAffinities z:7];
@@ -350,35 +362,38 @@
     return self;
 }
 -(void)updateClasses{
+	JobClassesInfoBox * infoBox = [[JobClassesInfoBox alloc] init];
 	switch (currentClassSelected) {
 		case 1:
 			[self removeChild:FemaleCharacterSquare cleanup:YES];
 			[self removeChild:MaleCharacterSquare cleanup:YES];
-			[self removeChild:ClassAffinities cleanup:YES];
+			//[self removeChild:ClassAffinities cleanup:YES];
 			FemaleCharacterSquare = [CCSprite spriteWithFile:@"DefenderFemaleSquare.png"];
 			MaleCharacterSquare = [CCSprite spriteWithFile:@"DefenderMaleSquare.png"];
-			ClassAffinities = [CCSprite spriteWithFile:@"DefenderAffinity.png"];
+			//ClassAffinities = [CCSprite spriteWithFile:@"DefenderAffinity.png"];
 			[FemaleCharacterSquare setPosition:ccp(130, 220)];
 			[MaleCharacterSquare setPosition:ccp(350, 220)];
-			[ClassAffinities setPosition:ccp(240, 220)];
+			//[ClassAffinities setPosition:ccp(240, 220)];
 			[self addChild:FemaleCharacterSquare z:7];
 			[self addChild:MaleCharacterSquare z:7];
-			[self addChild:ClassAffinities z:7];
+			//[self addChild:ClassAffinities z:7];
+			ClassAffinities.color = [infoBox getSoulColor:1];
 			[classDiscriptionLabel setString:@"Unweavering and Steadfast, the defender is able to control the battlefield with it's absolute defense, attracting aggression of enemies and absorbing damage for the party."];
 			break;
 		case 2:
 			[self removeChild:FemaleCharacterSquare cleanup:YES];
 			[self removeChild:MaleCharacterSquare cleanup:YES];
-			[self removeChild:ClassAffinities cleanup:YES];
+			//[self removeChild:ClassAffinities cleanup:YES];
 			FemaleCharacterSquare = [CCSprite spriteWithFile:@"StratagistFemaleSquare.png"];
 			MaleCharacterSquare = [CCSprite spriteWithFile:@"StratagistMaleSquare.png"];
-			ClassAffinities = [CCSprite spriteWithFile:@"StratagistAffinity.png"];
+			//ClassAffinities = [CCSprite spriteWithFile:@"StratagistAffinity.png"];
 			[FemaleCharacterSquare setPosition:ccp(130, 220)];
 			[MaleCharacterSquare setPosition:ccp(350, 220)];
-			[ClassAffinities setPosition:ccp(240, 220)];
+			//[ClassAffinities setPosition:ccp(240, 220)];
 			[self addChild:FemaleCharacterSquare z:7];
 			[self addChild:MaleCharacterSquare z:7];
-			[self addChild:ClassAffinities z:7];
+			//[self addChild:ClassAffinities z:7];
+			ClassAffinities.color = [infoBox getSoulColor:2];
 			[classDiscriptionLabel setString:@"Cautious and calculating, the stratagist is able to make quick decisions and use skills that can increase the fighting potential of his team, manuvering positioning and adjusting the battle field to his will."];
 			break;
 		default:
@@ -441,7 +456,7 @@
 
 -(void)createCharacter{
 	CharacterSelectionScreenSceen * myParent = (CharacterSelectionScreenSceen *)[self parent];
-	NSNumber* classTag = [NSNumber numberWithInt: myParent.Layer2.currentClassSelected];
+	int* classTag = myParent.Layer2.currentClassSelected;
 	int positionTag = myParent.Layer1.characterSelected;
 	//characterName;
 	bool isMaleTag = myParent.Layer2.maleSelected;

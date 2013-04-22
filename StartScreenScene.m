@@ -8,6 +8,7 @@
 
 #import "StartScreenScene.h"
 #import "CharacterSelectionScreen.h"
+#import "PolygonNode.h"
 
 @interface StartMenuLayer()
 
@@ -49,6 +50,28 @@
 		[menu alignItemsVerticallyWithPadding:10];
 		[menu setPosition:ccp(80, 130)];
 		[self addChild:menu z:1];
+		
+		/*
+		// Create an array of CGPoints
+		CGPoint points[] = {ccp(0,0), ccp(100,0), ccp(100,100), ccp(50, 150), ccp(0,100)};
+		// Create a new mutable array
+        NSMutableArray * result = [[NSMutableArray alloc] initWithObjects: nil];
+		
+        // Add the points to the mutable array using a NSValue wrapper
+		for(int i=0; i<(sizeof(points)/sizeof(CGPoint)); i++) {
+			NSValue* point = [NSValue valueWithCGPoint:points[i]];
+			[result addObject:point];
+		}
+		
+        // Create the polygon
+		PolygonNode* poly = [PolygonNode newPolygonNode: result];
+		
+        // Set the fill color
+        poly.fillColor = ccc4(0, 255, 100, 255);
+		
+        // Add the polygon to the scene
+		[self addChild:poly];
+		*/
     }
 	self.isTouchEnabled = YES;
     return self;

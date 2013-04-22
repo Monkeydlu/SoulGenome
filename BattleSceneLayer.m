@@ -1,219 +1,32 @@
 //
-//  BattleScene.m
+//  BattleSystemScene.m
 //  Tower Of Heros
 //
-//  Created by MingYang Lu on 2/21/13.
+//  Created by MingYang Lu on 3/26/13.
 //  Copyright 2013 Vanderbilt University. All rights reserved.
 //
 
 #import "BattleSceneLayer.h"
-#import "GameScene.h"
+#import "CCMenuAdvanced.h"
 
-
-//====================================================//
-//====================================================//
-//==============Battle Scene Layer====================//
-//====================================================//
-//====================================================//
 
 @implementation BattleLayer
 
-- (id) initWithLevel:(int)levelNum
+- (id) initWithLevel:(int)enemyTag
 				  c1:(PhysicalCharacter*)chara1 
 				  c2:(PhysicalCharacter*)chara2 
 				  c3:(PhysicalCharacter*)chara3{
 	if ((self = [super init])) {
 		
-		
 		member1 = chara1;
 		member2 = chara2;
 		member3 = chara3;
 		
-		//======================COLUMN ONE======================//
-		int i = arc4random() % 5;
-		HexTileArray[0] = [HexTileCCMenuItemImage itemFromNormalImage:@"HexEmpty.png" 
-														selectedImage:@"HexEmpty.png"
-															   target:self
-															 selector:@selector(HexTileTouched:)];
-		[HexTileArray[0] setUpHelperWithPosition:11 andColor:i];
-		
-		i = arc4random() % 5;
-		HexTileArray[1] = [HexTileCCMenuItemImage itemFromNormalImage:@"HexEmpty.png" 
-														selectedImage:@"HexEmpty.png"
-															   target:self
-															 selector:@selector(HexTileTouched:)];
-		[HexTileArray[1] setUpHelperWithPosition:12 andColor:i];
-		
-		i = arc4random() % 5;
-		HexTileArray[2] = [HexTileCCMenuItemImage itemFromNormalImage:@"HexEmpty.png" 
-														selectedImage:@"HexEmpty.png"
-															   target:self
-															 selector:@selector(HexTileTouched:)];
-		[HexTileArray[2] setUpHelperWithPosition:13 andColor:i];
-		
-		
-		//======================COLUMN TWO======================//
-		i = arc4random() % 5;
-		HexTileArray[3] = [HexTileCCMenuItemImage itemFromNormalImage:@"HexEmpty.png" 
-														selectedImage:@"HexEmpty.png"
-															   target:self
-															 selector:@selector(HexTileTouched:)];
-		[HexTileArray[3] setUpHelperWithPosition:21 andColor:i];
-		
-		i = arc4random() % 5;
-		HexTileArray[4] = [HexTileCCMenuItemImage itemFromNormalImage:@"HexEmpty.png" 
-														selectedImage:@"HexEmpty.png"
-															   target:self
-															 selector:@selector(HexTileTouched:)];
-		[HexTileArray[4] setUpHelperWithPosition:22 andColor:i];
-		
-		i = arc4random() % 5;
-		HexTileArray[5] = [HexTileCCMenuItemImage itemFromNormalImage:@"HexEmpty.png" 
-														selectedImage:@"HexEmpty.png"
-															   target:self
-															 selector:@selector(HexTileTouched:)];
-		[HexTileArray[5] setUpHelperWithPosition:23 andColor:i];
-		
-		i = arc4random() % 5;
-		HexTileArray[6] = [HexTileCCMenuItemImage itemFromNormalImage:@"HexEmpty.png" 
-														selectedImage:@"HexEmpty.png"
-															   target:self
-															 selector:@selector(HexTileTouched:)];
-		[HexTileArray[6] setUpHelperWithPosition:24 andColor:i];
-		
-
-		//======================COLUMN THREE======================//
-		i = arc4random() % 5;
-		HexTileArray[7] = [HexTileCCMenuItemImage itemFromNormalImage:@"HexEmpty.png" 
-														selectedImage:@"HexEmpty.png"
-															   target:self
-															 selector:@selector(HexTileTouched:)];
-		[HexTileArray[7] setUpHelperWithPosition:31 andColor:i];
-		
-		i = arc4random() % 5;
-		HexTileArray[8] = [HexTileCCMenuItemImage itemFromNormalImage:@"HexEmpty.png" 
-														selectedImage:@"HexEmpty.png"
-															   target:self
-															 selector:@selector(HexTileTouched:)];
-		[HexTileArray[8] setUpHelperWithPosition:32 andColor:i];
-		
-		i = arc4random() % 5;
-		HexTileArray[9] = [HexTileCCMenuItemImage itemFromNormalImage:@"HexEmpty.png" 
-														selectedImage:@"HexEmpty.png"
-															   target:self
-															 selector:@selector(HexTileTouched:)];
-		[HexTileArray[9] setUpHelperWithPosition:33 andColor:i];
-		
-		i = arc4random() % 5;
-		HexTileArray[10] = [HexTileCCMenuItemImage itemFromNormalImage:@"HexEmpty.png" 
-														selectedImage:@"HexEmpty.png"
-															   target:self
-															 selector:@selector(HexTileTouched:)];
-		[HexTileArray[10] setUpHelperWithPosition:34 andColor:i];
-		
-		i = arc4random() % 5;
-		HexTileArray[11] = [HexTileCCMenuItemImage itemFromNormalImage:@"HexEmpty.png" 
-														selectedImage:@"HexEmpty.png"
-															   target:self
-															 selector:@selector(HexTileTouched:)];
-		[HexTileArray[11] setUpHelperWithPosition:35 andColor:i];
-		
-		
-		//======================COLUMN FOUR======================//
-		i = arc4random() % 5;
-		HexTileArray[12] = [HexTileCCMenuItemImage itemFromNormalImage:@"HexEmpty.png" 
-														 selectedImage:@"HexEmpty.png"
-																target:self
-															  selector:@selector(HexTileTouched:)];
-		[HexTileArray[12] setUpHelperWithPosition:42 andColor:i];
-		
-		i = arc4random() % 5;
-		HexTileArray[13] = [HexTileCCMenuItemImage itemFromNormalImage:@"HexEmpty.png" 
-														 selectedImage:@"HexEmpty.png"
-																target:self
-															  selector:@selector(HexTileTouched:)];
-		[HexTileArray[13] setUpHelperWithPosition:43 andColor:i];
-		
-		i = arc4random() % 5;
-		HexTileArray[14] = [HexTileCCMenuItemImage itemFromNormalImage:@"HexEmpty.png" 
-														 selectedImage:@"HexEmpty.png"
-																target:self
-															  selector:@selector(HexTileTouched:)];
-		[HexTileArray[14] setUpHelperWithPosition:44 andColor:i];
-		
-		i = arc4random() % 5;
-		HexTileArray[15] = [HexTileCCMenuItemImage itemFromNormalImage:@"HexEmpty.png" 
-														 selectedImage:@"HexEmpty.png"
-																target:self
-															  selector:@selector(HexTileTouched:)];
-		[HexTileArray[15] setUpHelperWithPosition:45 andColor:i];
-		
-		
-		//======================COLUMN FIVE======================//
-		i = arc4random() % 5;
-		HexTileArray[16] = [HexTileCCMenuItemImage itemFromNormalImage:@"HexEmpty.png" 
-														 selectedImage:@"HexEmpty.png"
-																target:self
-															  selector:@selector(HexTileTouched:)];
-		[HexTileArray[16] setUpHelperWithPosition:53 andColor:i];
-		
-		i = arc4random() % 5;
-		HexTileArray[17] = [HexTileCCMenuItemImage itemFromNormalImage:@"HexEmpty.png" 
-														 selectedImage:@"HexEmpty.png"
-																target:self
-															  selector:@selector(HexTileTouched:)];
-		[HexTileArray[17] setUpHelperWithPosition:54 andColor:i];
-		
-		i = arc4random() % 5;
-		HexTileArray[18] = [HexTileCCMenuItemImage itemFromNormalImage:@"HexEmpty.png" 
-														 selectedImage:@"HexEmpty.png"
-																target:self
-															  selector:@selector(HexTileTouched:)];
-		[HexTileArray[18] setUpHelperWithPosition:55 andColor:i];
-		
-		//========================================================//
-		
-		
-		Column1 = [CCMenu menuWithItems:HexTileArray[0], HexTileArray[1], HexTileArray[2], nil];
-		[Column1 alignItemsVerticallyWithPadding:2];
-		[Column1 setPosition:ccp(150, 160)];
-		
-		Column2 = [CCMenu menuWithItems:HexTileArray[3], HexTileArray[4], HexTileArray[5], HexTileArray[6], nil];
-		[Column2 alignItemsVerticallyWithPadding:2];
-		[Column2 setPosition:ccp(196, 160)];
-		
-		Column3 = [CCMenu menuWithItems:HexTileArray[7], HexTileArray[8], HexTileArray[9], HexTileArray[10], HexTileArray[11], nil];
-		[Column3 alignItemsVerticallyWithPadding:2];
-		[Column3 setPosition:ccp(242, 160)];
-	
-		Column4 = [CCMenu menuWithItems:HexTileArray[12], HexTileArray[13], HexTileArray[14], HexTileArray[15], nil];
-		[Column4 alignItemsVerticallyWithPadding:2];
-		[Column4 setPosition:ccp(288, 160)];
-		
-		Column5 = [CCMenu menuWithItems:HexTileArray[16], HexTileArray[17], HexTileArray[18], nil];
-		[Column5 alignItemsVerticallyWithPadding:2];
-		[Column5 setPosition:ccp(334, 160)];
-		
 		backGround = [CCSprite spriteWithFile:@"Floor1BG.png"];
-		[backGround setPosition:ccp(243, 160)];
+		[backGround setPosition:ccp(240, 160)];
 		[self addChild:backGround z:0];
-		
-		[self addChild:Column1 z:10];
-		[self addChild:Column2 z:11];
-		[self addChild:Column3 z:12];
-		[self addChild:Column4 z:11];
-		[self addChild:Column5 z:10];
-		
-		
-		hero1 = [[PhysicalHeroDummy alloc] initWithCharacter:member1 andPos:24];
-		hero2 = [[PhysicalHeroDummy alloc] initWithCharacter:member2 andPos:35];
-		hero3 = [[PhysicalHeroDummy alloc] initWithCharacter:member3 andPos:45];
-		
-		[self addChild:hero1 z: 15];
-		[self addChild:hero2 z: 15];
-		[self addChild:hero3 z: 15];
-		
-		[self setUpEnemies];
+
+		[self generateEnemyParty:enemyTag];
 		[self setUpUnitsInBattleMenu];
 		[self setUpUnitTimers];
 		
@@ -226,40 +39,206 @@
 }
 
 
--(void)setUpEnemies{
-	enemy1 = [[PhysicalEnemyDummy alloc]initWithTag:0 andPos:21];
-	enemy2 = [[PhysicalEnemyDummy alloc]initWithTag:0 andPos:31];
-	enemy3 = [[PhysicalEnemyDummy alloc]initWithTag:0 andPos:42];
-	enemy4 = [[PhysicalEnemyDummy alloc]initWithTag:0 andPos:32];
-	[self addChild:enemy1 z:15];
-	[self addChild:enemy2 z:15];
-	[self addChild:enemy3 z:15];
-	[self addChild:enemy4 z:15];
-}
-
 -(void)updateTimer:(ccTime)dt{
 	
+	if ([member1 needsUpdate] == true || [member2 needsUpdate] == true || [member3 needsUpdate] == true) {
+		GameScene * myParent = (GameScene *)[self parent];
+		[myParent updateHuds];
+	}
+	
 	if (currentGameState == 0) {
-		[hero1 updateTimer];
-		[hero2 updateTimer];
-		[hero3 updateTimer];
+		[member1 updateTimer];
+		[member2 updateTimer];
+		[member3 updateTimer];
 		
-		[hero1Timer setPercentage:[hero1 getTimerProgress] * 100];
-		[hero2Timer setPercentage:[hero2 getTimerProgress] * 100];
-		[hero3Timer setPercentage:[hero3 getTimerProgress] * 100];
+		[hero1Timer setPercentage:[member1 getTimerProgress] * 100];
+		[hero2Timer setPercentage:[member2 getTimerProgress] * 100];
+		[hero3Timer setPercentage:[member3 getTimerProgress] * 100];
 		
-		if (enemy1 != 0) {
+		bool enemysLeft = false;
+		
+		if (enemy1 != 0 && ![enemy1 isDead] && currentGameState == 0) {
 			[enemy1 updateTimer];
+			[enemy1Timer setPercentage:[enemy1 getTimerProgress] * 100];
+			if ([enemy1 enemyIsReady]) {
+				currentGameState = 10;
+				enemyTemp = enemy1;
+				[self EnemyAction];
+				enemyTemp = 0;
+				[enemy1 resetTimer];
+				currentGameState = 0;
+				return;
+			}
+			enemysLeft = true;
 		}
-		if (enemy2 != 0) {
+		if (enemy2 != 0 && ![enemy2 isDead] && currentGameState == 0) {
 			[enemy2 updateTimer];
+			[enemy2Timer setPercentage:[enemy2 getTimerProgress] * 100];
+			if ([enemy2 enemyIsReady]) {
+				currentGameState = 10;
+				enemyTemp = enemy1;
+				[self EnemyAction];
+				enemyTemp = 0;
+				[enemy2 resetTimer];
+				currentGameState = 0;
+				return;
+			}
+			enemysLeft = true;
 		}
-		if (enemy3 != 0) {
+		if (enemy3 != 0 && ![enemy3 isDead] && currentGameState == 0) {
 			[enemy3 updateTimer];
+			[enemy3Timer setPercentage:[enemy3 getTimerProgress] * 100];
+			if ([enemy3 enemyIsReady]) {
+				currentGameState = 10;
+				enemyTemp = enemy1;
+				[self EnemyAction];
+				enemyTemp = 0;
+				[enemy3 resetTimer];
+				currentGameState = 0;
+				return;
+			}
+			enemysLeft = true;
 		}
-		if (enemy4 != 0) {
+		if (enemy4 != 0 && ![enemy4 isDead] && currentGameState == 0) {
 			[enemy4 updateTimer];
+			[enemy4Timer setPercentage:[enemy4 getTimerProgress] * 100];
+			if ([enemy4 enemyIsReady]) {
+				currentGameState = 10;
+				enemyTemp = enemy1;
+				[self EnemyAction];
+				enemyTemp = 0;
+				[enemy4 resetTimer];
+				currentGameState = 0;
+				return;
+			}
+			enemysLeft = true;
 		}
+		
+		if (enemysLeft == false) {
+			[self endBattle];
+		}
+	}
+	
+}
+
+-(void)endBattle{
+	GameScene * myParent = (GameScene *)[self parent];
+	[myParent.myBaseLayer turnOnHud];
+	[myParent enableMap];
+	[myParent removeChild:myParent.myBattleLayer cleanup:YES];
+}
+
+-(void)generateEnemyParty:(int)partyTag{
+	
+	switch (partyTag) {
+		case 1:
+			enemy1 = [[PhysicalEnemyDummy alloc]initWithTag:1 andName:@"FrogA" andPosition:1];
+			//enemy2 = [[PhysicalEnemyDummy alloc]initWithTag:1 andName:@"FrogB" andPosition:2];
+			//enemy3 = [[PhysicalEnemyDummy alloc]initWithTag:1 andName:@"FrogC" andPosition:3];
+			//enemy4 = [[PhysicalEnemyDummy alloc]initWithTag:1 andName:@"FrogD" andPosition:4];
+			[enemy1 setPosition:ccp(140, 160)];
+			//[enemy2 setPosition:ccp(200, 160)];
+			//[enemy3 setPosition:ccp(260, 160)];
+			//[enemy4 setPosition:ccp(320, 160)];
+			[self addChild:enemy1 z:15];
+			//[self addChild:enemy2 z:15];
+			//[self addChild:enemy3 z:15];
+			//[self addChild:enemy4 z:15];
+			break;
+		case 2:
+			enemy1 = [[PhysicalEnemyDummy alloc]initWithTag:1 andName:@"FrogA" andPosition:1];
+			enemy2 = [[PhysicalEnemyDummy alloc]initWithTag:1 andName:@"FrogB" andPosition:2];
+			//enemy3 = [[PhysicalEnemyDummy alloc]initWithTag:1 andName:@"FrogC" andPosition:3];
+			//enemy4 = [[PhysicalEnemyDummy alloc]initWithTag:1 andName:@"FrogD" andPosition:4];
+			[enemy1 setPosition:ccp(140, 160)];
+			[enemy2 setPosition:ccp(200, 160)];
+			//[enemy3 setPosition:ccp(260, 160)];
+			//[enemy4 setPosition:ccp(320, 160)];
+			[self addChild:enemy1 z:15];
+			[self addChild:enemy2 z:15];
+			//[self addChild:enemy3 z:15];
+			//[self addChild:enemy4 z:15];
+			break;
+		default:
+			break;
+	}
+	
+	[self setUpEnemies];
+}
+
+-(void)setUpEnemies{
+	
+	if (enemy1 != 0) {
+		CCLabelTTF * enemy1NameBox = [CCLabelTTF labelWithString:[enemy1 getName]
+													  dimensions:CGSizeMake(80, 20) 
+													   alignment:UITextAlignmentLeft
+												   lineBreakMode:UILineBreakModeWordWrap 
+														fontName:@"Arial" 
+														fontSize:14];
+		[enemy1NameBox setPosition:ccp(435, 160 + 8 + 42*3)];
+		[enemy1NameBox setColor:ccc3(0, 0, 0)];
+		[self addChild:enemy1NameBox z:15];
+		
+		enemy1Timer = [CCProgressTimer progressWithFile:@"enemyLoadBar.png"];
+		enemy1Timer.type = kCCProgressTimerTypeHorizontalBarLR;
+		enemy1Timer.percentage = [enemy1 getTimerProgress];
+		enemy1Timer.position = ccp(430, 160 - 8 + 42*3);
+		[self addChild:enemy1Timer z:15];
+	}
+	
+	if (enemy2 != 0) {
+		CCLabelTTF * enemy2NameBox = [CCLabelTTF labelWithString:[enemy2 getName]
+													  dimensions:CGSizeMake(80, 20) 
+													   alignment:UITextAlignmentLeft
+												   lineBreakMode:UILineBreakModeWordWrap 
+														fontName:@"Arial" 
+														fontSize:14];
+		[enemy2NameBox setPosition:ccp(435, 160 + 8 + 42*2)];
+		[enemy2NameBox setColor:ccc3(0, 0, 0)];
+		[self addChild:enemy2NameBox z:15];
+		
+		enemy2Timer = [CCProgressTimer progressWithFile:@"enemyLoadBar.png"];
+		enemy2Timer.type = kCCProgressTimerTypeHorizontalBarLR;
+		enemy2Timer.percentage = [enemy2 getTimerProgress];
+		enemy2Timer.position = ccp(430, 160 - 8 + 42*2);
+		[self addChild:enemy2Timer z:15];
+	}
+	
+	if (enemy3 != 0){
+		CCLabelTTF * enemy3NameBox = [CCLabelTTF labelWithString:[enemy3 getName]
+													  dimensions:CGSizeMake(80, 20) 
+													   alignment:UITextAlignmentLeft
+												   lineBreakMode:UILineBreakModeWordWrap 
+														fontName:@"Arial" 
+														fontSize:14];
+		[enemy3NameBox setPosition:ccp(435, 160 + 8 + 42)];
+		[enemy3NameBox setColor:ccc3(0, 0, 0)];
+		[self addChild:enemy3NameBox z:15];
+		
+		enemy3Timer = [CCProgressTimer progressWithFile:@"enemyLoadBar.png"];
+		enemy3Timer.type = kCCProgressTimerTypeHorizontalBarLR;
+		enemy3Timer.percentage = [enemy3 getTimerProgress];
+		enemy3Timer.position = ccp(430, 160 - 8 + 42);
+		[self addChild:enemy3Timer z:15];
+	}
+	
+	if (enemy4 != 0){
+		
+		CCLabelTTF * enemy4NameBox = [CCLabelTTF labelWithString:[enemy4 getName]
+													  dimensions:CGSizeMake(80, 20) 
+													   alignment:UITextAlignmentLeft
+												   lineBreakMode:UILineBreakModeWordWrap 
+														fontName:@"Arial" 
+														fontSize:14];
+		[enemy4NameBox setPosition:ccp(435, 160 + 8)];
+		[enemy4NameBox setColor:ccc3(0, 0, 0)];
+		[self addChild:enemy4NameBox z:15];
+		
+		enemy4Timer = [CCProgressTimer progressWithFile:@"enemyLoadBar.png"];
+		enemy4Timer.type = kCCProgressTimerTypeHorizontalBarLR;
+		enemy4Timer.percentage = [enemy4 getTimerProgress];
+		enemy4Timer.position = ccp(430, 160 - 8);
+		[self addChild:enemy4Timer z:15];
 	}
 	
 }
@@ -271,7 +250,7 @@
 											  lineBreakMode:UILineBreakModeWordWrap 
 												   fontName:@"Arial" 
 												   fontSize:14];
-	[hero1NameBox setPosition:ccp(435, 160 - 40)];
+	[hero1NameBox setPosition:ccp(435, 160 + 8 - 42)];
 	[hero1NameBox setColor:ccc3(0, 0, 0)];
 	[self addChild:hero1NameBox z:15];
 	
@@ -281,7 +260,7 @@
 											  lineBreakMode:UILineBreakModeWordWrap 
 												   fontName:@"Arial" 
 												   fontSize:14];
-	[hero2NameBox setPosition:ccp(435, 160 - 40 - 45)];
+	[hero2NameBox setPosition:ccp(435, 160 + 8 - 42*2)];
 	[hero2NameBox setColor:ccc3(0, 0, 0)];
 	[self addChild:hero2NameBox z:15];
 	
@@ -291,31 +270,31 @@
 											  lineBreakMode:UILineBreakModeWordWrap 
 												   fontName:@"Arial" 
 												   fontSize:14];
-	[hero3NameBox setPosition:ccp(435, 160 - 40 - 90)];
+	[hero3NameBox setPosition:ccp(435, 160 + 8 - 42*3)];
 	[hero3NameBox setColor:ccc3(0, 0, 0)];
 	[self addChild:hero3NameBox z:15];
 	
 	hero1Timer = [CCProgressTimer progressWithFile:@"playerLoadBar.png"];
 	hero1Timer.type = kCCProgressTimerTypeHorizontalBarLR;
-	hero1Timer.percentage = [hero1 getTimerProgress];
-	hero1Timer.position = ccp(430, 160 - 45);
+	hero1Timer.percentage = [member1 getTimerProgress];
+	hero1Timer.position = ccp(430, 160 - 8 - 42);
 	[self addChild:hero1Timer z:15];
 	
 	hero2Timer = [CCProgressTimer progressWithFile:@"playerLoadBar.png"];
 	hero2Timer.type = kCCProgressTimerTypeHorizontalBarLR;
-	hero2Timer.percentage = [hero2 getTimerProgress];
-	hero2Timer.position = ccp(430, 160 - 90);
+	hero2Timer.percentage = [member2 getTimerProgress];
+	hero2Timer.position = ccp(430, 160 - 8  - 42*2);
 	[self addChild:hero2Timer z:15];
 	
 	hero3Timer = [CCProgressTimer progressWithFile:@"playerLoadBar.png"];
 	hero3Timer.type = kCCProgressTimerTypeHorizontalBarLR;
-	hero3Timer.percentage = [hero3 getTimerProgress];
-	hero3Timer.position = ccp(430, 160 - 135);
+	hero3Timer.percentage = [member3 getTimerProgress];
+	hero3Timer.position = ccp(430, 160 - 8  - 42*3);
 	[self addChild:hero3Timer z:15];
 }
 
 -(void)setUpUnitsInBattleMenu{
-	menuBack1 = [CCSprite spriteWithFile:@"MenuBack.png"];
+	menuBack1 = [CCSprite spriteWithFile:@"MenuBack2.png"];
 	[menuBack1 setPosition:ccp(430, 160)];
 	[self addChild:menuBack1 z:14];
 	
@@ -356,61 +335,192 @@
 	[self addChild:unitsInBattle z:15];
 }
 
+-(void)enemyTargetSelect{
+	float a = [member1 getCurHealth];
+	float b = [member2 getCurHealth];
+	float c = [member3 getCurHealth];
+	
+	float d = a + b + c;
+	
+	a = (a / d) * 100;
+	b = (b / d + a)  * 100;
+	c = (c / d + b)  * 100;
+	
+	int foo = arc4random() % 100 + 1;
+	
+	if (foo < a) {
+		currentlySelectedHero = member1;
+	}else if(foo < b){
+		currentlySelectedHero = member2;
+	}else{
+		currentlySelectedHero = member3;
+	}
+	
+}
+
+-(int)calculateDamageTaken{
+	
+	int damage = ( [enemyTemp getATK] - [currentlySelectedHero getDef] ) * ( [enemyTemp getATK] / [currentlySelectedHero getVit]);
+	
+	if (damage <= 0) {
+		damage = 1;
+	}
+	return damage;
+}
+
+-(void)EnemyAction{
+	int action = [enemyTemp getAction];
+	[enemyTemp progressActionCounter];
+	switch (action) {
+		case 0: //command to wait
+			NSLog(@"%@ waits...", [enemyTemp getName]);
+			break;
+		case 1: //command to attack
+			[self enemyTargetSelect];
+			[self playAttackAnimation:1];
+			int damage = [self calculateDamageTaken];
+			[currentlySelectedHero takeDamage:damage];
+			NSLog(@"%@ attacks %@ for %d damage!", [enemyTemp getName], [currentlySelectedHero getName], damage);
+			break;
+		default:
+			break;
+	}
+}
+
+-(int)calculateAttackDamage:(int)enemyDef{
+
+	int damage = ( [currentlySelectedHero getAtk] - enemyDef ) * ( [currentlySelectedHero getStr] / enemyDef);
+	
+	return damage;
+}
+
+-(void)playAttackAnimation:(int)animationTag{
+	
+	switch (animationTag) {
+		case 1:
+			[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"slash.plist"];
+			spriteSheet = [CCSpriteBatchNode 
+						   batchNodeWithFile:@"slash.png"];
+			[self addChild:spriteSheet z:16];
+			
+			NSMutableArray *attackAnimationFrames = [NSMutableArray array];
+			for(int i = 1; i <= 10; ++i) {
+				[attackAnimationFrames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"%d.png", i]]];
+			}
+			
+			CCAnimation *attackAnimation = [CCAnimation animationWithFrames:attackAnimationFrames delay:0.1f];
+			
+			CCSprite* attackAnimationSprite = [CCSprite spriteWithSpriteFrameName:@"1.png"];        
+			NSLog(@"current game state is %d", currentGameState);
+			if (currentGameState > 9) {
+				NSLog(@"attack player");
+				attackAnimationSprite.position = [currentlySelectedHero getPosition];
+			}else{
+				NSLog(@"attack enemy");
+				attackAnimationSprite.position = enemyTemp.position;
+			}
+			CCFiniteTimeAction * playAction = [CCAnimate actionWithAnimation:attackAnimation restoreOriginalFrame:NO];
+			CCFiniteTimeAction * cleanupAction = [CCCallFuncND actionWithTarget:self selector:@selector(cleanupSprite:) data:attackAnimationSprite];
+			
+			[spriteSheet addChild:attackAnimationSprite z:0];
+			[attackAnimationSprite runAction:[CCSequence actions:playAction, cleanupAction, nil]];
+			break;
+		default:
+			break;
+	}
+	
+	}
+
+-(void)cleanupSprite:(CCSprite*)inSprite
+{
+    [spriteSheet removeChild:inSprite cleanup:YES];
+	
+	unitsInBattle.isTouchEnabled = true;
+	
+	if ([enemyTemp isDead]) {
+		[self removeChild:enemyTemp cleanup:YES];
+		enemyTemp = 0;
+	}
+}
+
+-(void)enemySelected{
+	
+	if (currentGameState == 2 && enemyTemp != 0) { // attack game state
+		int damage = [self calculateAttackDamage:[enemyTemp getDEF]];
+		[enemyTemp takeDamage:damage];
+		NSLog(@"%@ attacks %@ for %d damage!", [currentlySelectedHero getName], [enemyTemp getName], damage);
+		[self playAttackAnimation:1];
+		[currentlySelectedHero resetTimer];
+		currentlySelectedHero = 0;
+		currentGameState = 0;
+	}
+}
+
 -(void)Enemy1Selected{
 	NSLog(@"enemy 1 selected");
+	enemyTemp = enemy1;
+	[self enemySelected];
 }
 
 -(void)Enemy2Selected{
 	NSLog(@"enemy 2 selected");
+	enemyTemp = enemy2;
+	[self enemySelected];
 }
 
 -(void)Enemy3Selected{
 	NSLog(@"enemy 3 selected");
+	enemyTemp = enemy3;
+	[self enemySelected];
 }
 
 -(void)Enemy4Selected{
 	NSLog(@"enemy 4 selected");
+	enemyTemp = enemy4;
+	[self enemySelected];
+}
+
+-(void)PlayerSelected:(int)selectedTag{
+	switch (selectedTag) {
+		case 1:
+			currentlySelectedHero = member1;
+			break;
+		case 2:
+			currentlySelectedHero = member2;
+			break;
+		case 3:
+			currentlySelectedHero = member3;
+			break;
+		default:
+			break;
+	}
+	if ([currentlySelectedHero heroIsReady]) {
+		[self setUpBattleMenu];
+		currentGameState = 1;
+		unitsInBattle.isTouchEnabled = 0;
+	}
 }
 
 -(void)Player1Selected{
 	NSLog(@"Player 1 selected");
-	if ([hero1 heroIsReady]) {
-		[self setUpBattleMenu];
-		currentGameState = 1;	//set game state to command menu
-		currentlySelectedHero = 1;
-		unitsInBattle.isTouchEnabled = 0;
-	}
+	[self PlayerSelected:1];
 }
 
 -(void)Player2Selected{
 	NSLog(@"Player 2 selected");
-	if ([hero2 heroIsReady]) {
-		[self setUpBattleMenu];
-		currentGameState = 1;	//set game state to command menu
-		currentlySelectedHero = 2;
-		unitsInBattle.isTouchEnabled = 0;
-	}
+	[self PlayerSelected:2];
 }
 
 -(void)Player3Selected{
 	NSLog(@"Player 3 selected");
-	if ([hero3 heroIsReady]) {
-		[self setUpBattleMenu];
-		currentGameState = 1;	//set game state to command menu
-		currentlySelectedHero = 3;
-		unitsInBattle.isTouchEnabled = 0;
-	}
+	[self PlayerSelected:3];
 }
 
 -(void)setUpBattleMenu{
 	menuBack2 = [CCSprite spriteWithFile:@"MenuBack.png"];
-	[menuBack2 setPosition:ccp(430, 160)];
+	[menuBack2 setPosition:ccp(240, 50)];
 	[self addChild:menuBack2 z:16];
 	
-	CCMenuItemImage * MoveCmd = [CCMenuItemImage itemFromNormalImage:@"BattleMenuMove.png" 
-													   selectedImage:@"BattleMenuPressed.png"
-															  target:self
-															selector:@selector(BattleMenuMove)];
 	CCMenuItemImage * AttackCmd = [CCMenuItemImage itemFromNormalImage:@"BattleMenuAttack.png" 
 														 selectedImage:@"BattleMenuPressed.png"
 																target:self
@@ -428,228 +538,64 @@
 																target:self
 															  selector:@selector(BattleMenuCancel)];
 	
-	battleCommands = [CCMenu menuWithItems: MoveCmd, AttackCmd, SkillCmd, ItemCmd, CancelCmd, nil];
-	[battleCommands alignItemsVerticallyWithPadding:2];
-	[battleCommands setPosition:ccp(430, 160)];
+	battleCommands = [CCMenu menuWithItems: AttackCmd, SkillCmd, ItemCmd, CancelCmd, nil];
+	[battleCommands alignItemsHorizontallyWithPadding:2];
+	[battleCommands setPosition:ccp(240, 50)];
 	
 	[self addChild:battleCommands z:17];
 }
 
--(int)convertIndexToPosition:(int)tempIndex{
-	switch (tempIndex) {
-		case 0:
-			return 11;
-			break;
-		case 1:
-			return 12;
-			break;
-		case 2:
-			return 13;
-			break;
-		case 3:
-			return 21;
-			break;
-		case 4:
-			return 22;
-			break;
-		case 5:
-			return 23;
-			break;
-		case 6:
-			return 24;
-			break;
-		case 7:
-			return 31;
-			break;
-		case 8:
-			return 32;
-			break;
-		case 9:
-			return 33;
-			break;
-		case 10:
-			return 34;
-			break;
-		case 11:
-			return 35;
-			break;
-		case 12:
-			return 42;
-			break;
-		case 13:
-			return 43;
-			break;
-		case 14:
-			return 44;
-			break;
-		case 15:
-			return 45;
-			break;
-		case 16:
-			return 53;
-			break;
-		case 17:
-			return 54;
-			break;
-		case 18:
-			return 55;
-			break;
-		default:
-			return -1;
-			break;
-	}
-}
-
--(int)convertPositionToIndex:(int)tempPosition{
-	switch (tempPosition) {
-		case 11:
-			return 0;
-			break;
-		case 12:
-			return 1;
-			break;
-		case 13:
-			return 2;
-			break;
-		case 21:
-			return 3;
-			break;
-		case 22:
-			return 4;
-			break;
-		case 23:
-			return 5;
-			break;
-		case 24:
-			return 6;
-			break;
-		case 31:
-			return 7;
-			break;
-		case 32:
-			return 8;
-			break;
-		case 33:
-			return 9;
-			break;
-		case 34:
-			return 10;
-			break;
-		case 35:
-			return 11;
-			break;
-		case 42:
-			return 12;
-			break;
-		case 43:
-			return 13;
-			break;
-		case 44:
-			return 14;
-			break;
-		case 45:
-			return 15;
-			break;
-		case 53:
-			return 16;
-			break;
-		case 54:
-			return 17;
-			break;
-		case 55:
-			return 18;
-			break;
-		default:
-			return -1;
-			break;
-	}
-}
-
--(bool)checkIsTileOpen:(int)tileNum{
-	if ([self convertPositionToIndex:tileNum] == -1) {
-		return false;
-	}
-	if ([hero1 getPosition] == tileNum || [hero2 getPosition] == tileNum || [hero3 getPosition] == tileNum) {
-		return false;
-	}
-	if ((enemy1 != 0 && [enemy1 getPosition] == tileNum) || (enemy2 != 0 && [enemy2 getPosition] == tileNum) || (enemy3 != 0 && [enemy3 getPosition] == tileNum) || (enemy4 != 0 && [enemy4 getPosition] == tileNum)) {
-		return false;
-	}
-	return true;
-}
-
--(void)highlightOpenNeighbors:(int)tileNum{
-	if ([self checkIsTileOpen:tileNum - 1]) {
-		NSLog(@"highlighting %d", tileNum - 1);
-		int foo = [self convertPositionToIndex:tileNum - 1];
-		[HexTileArray[foo] highLightTile];
-	}
-	if ([self checkIsTileOpen:tileNum + 1]) {
-		NSLog(@"highlighting %d", tileNum + 1);
-		int foo = [self convertPositionToIndex:tileNum + 1];
-		[HexTileArray[foo] highLightTile];
-	}
-	if ([self checkIsTileOpen:tileNum + 10]) {
-		NSLog(@"highlighting %d", tileNum + 10);
-		int foo = [self convertPositionToIndex:tileNum + 10];
-		[HexTileArray[foo] highLightTile];
-	}
-	if ([self checkIsTileOpen:tileNum + 11]) {
-		NSLog(@"highlighting %d", tileNum + 11);
-		int foo = [self convertPositionToIndex:tileNum + 11];
-		[HexTileArray[foo] highLightTile];
-	}
-	if ([self checkIsTileOpen:tileNum - 10]) {
-		NSLog(@"highlighting %d", tileNum - 10);
-		int foo = [self convertPositionToIndex:tileNum - 10];
-		[HexTileArray[foo] highLightTile];
-	}
-	if ([self checkIsTileOpen:tileNum - 11]) {
-		NSLog(@"highlighting %d", tileNum - 11);
-		int foo = [self convertPositionToIndex:tileNum - 11];
-		[HexTileArray[foo] highLightTile];
-	}
-}
-
--(void)unHighlightTiles{
-	for (int i = 0; i < 19; i++) {
-		if ([HexTileArray[i] isTileHighlighted]) {
-			[HexTileArray[i] unHighLightTile];
-		}
-	}
-}
-
--(void)BattleMenuMove{
-	if (currentGameState == 1 ) { // game state is in command menu
-		int currentLocation;
-		switch (currentlySelectedHero) {
-			case 1:
-				NSLog(@"Hero1's position is %d", [hero1 getPosition]);
-				currentLocation = [hero1 getPosition];
-				break;
-			case 2:
-				currentLocation = [hero2 getPosition];
-				break;
-			case 3:
-				currentLocation = [hero3 getPosition];
-				break;
-			default:
-				NSLog(@"hero selected out of range");
-				break;
-		}
-		[self highlightOpenNeighbors:currentLocation];
-		currentGameState = 2; //game state is in move command
-	}
-	
-	
-}
-
 -(void)BattleMenuAttack{
-	
+	if (currentGameState == 1) {
+		NSLog(@"attack selected");
+		currentGameState = 2; //attak game state.
+		NSLog(@"Select enemy to attack...");
+		[self removeChild:battleCommands cleanup:YES];
+		[self removeChild:menuBack2 cleanup:YES];
+	}
 }
 
 -(void)BattleMenuSkill{
+	NSLog(@"start to build skill list menu");
+	NSMutableArray *menuItems = [currentlySelectedHero getActiveSkills];
 	
+	// Prepare Menu
+	NSLog(@"Declare menu");
+	CCMenuAdvanced *menu = [CCMenuAdvanced menuWithItems: nil];
+	CCMenuItemLabel * temp;
+	NSLog(@"Begin skills loop");
+	for (PhysicalActiveSkill *skill in menuItems){
+		NSLog(@"Fetch Skill");
+		if ([skill getSkillLevel] > 0) {
+			NSLog(@"Add Skill");
+			temp = [CCMenuItemLabel itemWithLabel: [CCLabelTTF labelWithString:[skill getSkillName] fontName:@"Arial" fontSize:16]
+										   target: self
+										 selector: @selector(activeSkillPressed:)];
+			temp.color = ccc3(0, 0, 0);
+			[menu addChild: temp];
+		}
+	}
+	NSLog(@"Finished all skills");
+	
+	NSLog(@"Set Alignmnet");	
+	// Setup Menu Alignment
+	[menu alignItemsVerticallyWithPadding: 5 bottomToTop: NO]; //< also sets contentSize and keyBindings on Mac
+	menu.isRelativeAnchorPoint = YES;
+	
+	//menu.anchorPoint = ccp(1, 1);
+	menu.position = ccp(200, 160);
+	
+	//menu.scale = 1;
+	
+	menu.boundaryRect = CGRectMake(100, 160, 200, 300);
+	
+	NSLog(@"Fix Position");
+	[menu fixPosition];
+	
+	[self removeChild:battleCommands cleanup:YES];
+	[self removeChild:menuBack2 cleanup:YES];
+	
+	[self addChild:menu];
 }
 
 -(void)BattleMenuItem{
@@ -662,53 +608,10 @@
 	[self removeChild:battleCommands cleanup:YES];
 	[self removeChild:menuBack2 cleanup:YES];
 	unitsInBattle.isTouchEnabled = true;
-	[self unHighlightTiles];
 }
 
--(void)HexTileTouched:(HexTileCCMenuItemImage *)sender{
-	int temp = sender.myPosition;
-	NSLog(@"hex %d touched, gameState: %d", sender.myPosition, currentGameState);
+-(void)activeSkillPressed:(CCMenuItemLabel *)sender{
 	
-	if (currentGameState == 0) {
-		if ([sender getPosition] == [hero1 getPosition]) {
-			[self Player1Selected];
-		}
-		if ([sender getPosition] == [hero2 getPosition]) {
-			[self Player2Selected];
-		}
-		if ([sender getPosition] == [hero3 getPosition]) {
-			[self Player3Selected];
-		}
-	}
-	
-	if (currentGameState == 2) { //game state is in move command
-		if ([sender isHighlighted]) {
-			NSLog(@"current hero: %d", currentlySelectedHero);
-			switch (currentlySelectedHero) {
-				case 1:
-					[hero1 updatePosition:temp];
-					[hero1 resetTimer];
-					break;
-				case 2:
-					[hero2 updatePosition:temp];
-					[hero2 resetTimer];
-					break;
-				case 3:
-					[hero3 updatePosition:temp];
-					[hero3 resetTimer];
-					break;
-				default:
-					break;
-			}
-			currentlySelectedHero = 0;
-			currentGameState = 0;
-			[self removeChild:battleCommands cleanup:YES];
-			[self removeChild:menuBack2 cleanup:YES];
-			unitsInBattle.isTouchEnabled = true;
-			[self unHighlightTiles];
-		}
-	}
 }
-
 
 @end

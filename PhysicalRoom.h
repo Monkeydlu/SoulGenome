@@ -8,14 +8,15 @@
 
 #import "cocos2d.h"
 
-@interface PhysicalRoom : CCSprite {
+@interface PhysicalRoom : CCMenuItemImage {
     int roomType; 
 	int roomState;
+	int roomNumber;
 }
-- (id)initWithPosition:(int)pos andType:(int)type;
-- (void)setRoomPosition:(int)pos;
+- (void)setUpHelperWithWithType:(NSNumber *)type andRoomNumber:(int)number;
 - (void)updateStatus;
 - (void)revealRoom;
 - (int)getRoomType;
 - (int)getRoomState;
+- (int)getRoomNumber;
 @end

@@ -10,7 +10,7 @@
 
 @implementation PhysicalEquipment
 
--(PhysicalEquipment*)initEuipmentWithTag:(int)equipTag{
+-(PhysicalEquipment*)initEuipmentWithTag:(int)equipTag asArmor:(bool)isArmor{
 	//access the equipment tool box. 
 	return self;
 }

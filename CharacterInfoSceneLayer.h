@@ -9,9 +9,28 @@
 #import "cocos2d.h"
 #import "PhysicalCharacter.h"
 #import "GameScene.h"
+#import "PhysicalBasicSkill.h"
+#import "PhysicalPassiveSkill.h"
+#import "PhysicalActiveSkill.h"
 
 @interface CharacterInfoLayer : CCLayerColor {
+	CCSprite * backGround;
+	CCMenu * menuTabs;
+	PhysicalCharacter * currentCharacter;
 	
+	CCMenu * basicSkillsMenu;
+	CCMenu * t1SkillsMenu;
+	CCMenu * t2SkillsMenu;
+	CCMenu * t3SkillsMenu;
+	CCMenu * t4SkillsMenu;
+	
+	int currentlySelectedSkillType;
+	PhysicalBasicSkill * currentSelectedSkillB;
+	PhysicalPassiveSkill * currentSelectedSkillP;
+	PhysicalActiveSkill * currentSelectedSkillA;
+	CCLabelTTF * skillDiscLabel;
+	CCMenu * skillLevelMenu;
+	CCSprite * skillLevelBg;
 }
 - (id) initWithCharacter:(PhysicalCharacter*)character;
 @end

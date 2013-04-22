@@ -14,7 +14,9 @@
 
 #import "JobClassesInfoBox.h"
 #import "PhysicalEquipment.h"
-#import "PhysicalSkill.h"
+#import "PhysicalBasicSkill.h"
+#import "PhysicalActiveSkill.h"
+#import "PhysicalPassiveSkill.h"
 
 @implementation JobClassesInfoBox
 
@@ -25,27 +27,27 @@
 	return self;
 }
 
--(NSArray*)GetClassStatInfoOfClass:(NSNumber*)classTag{
+-(NSArray*)GetClassStatInfoOfClass:(int)classTag{
 	//NSArray* stats = 0;
 	NSLog(@"creating info array");
-	switch ([classTag intValue]) {
-		case 1: //DEFENDER
-			NSLog(@"creating defender");
+	switch (classTag) {
+		case 1: //Berserker
+			NSLog(@"creating Berserker");
 			return [NSArray arrayWithObjects:
 					//[0]	HP	HEALTH POINTS
-					[NSNumber numberWithInt:56],
+					[NSNumber numberWithInt:42],
 					//[1]	STR	STRENTH
-					[NSNumber numberWithInt:6], 
+					[NSNumber numberWithInt:9],
 					//[2]	VIT	VITALITY
-					[NSNumber numberWithInt:11], 
+					[NSNumber numberWithInt:5],
 					//[3]	AGI	AGILITY
-					[NSNumber numberWithInt:7], 
+					[NSNumber numberWithInt:3],
 					//[4]	INT	INTELEGENCE
-					[NSNumber numberWithInt:5], 
+					[NSNumber numberWithInt:1],
 					//[5]	DEX	DEXTERITY
-					[NSNumber numberWithInt:7], 
-					//[6]	ACT	ACTION
-					[NSNumber numberWithInt:80], 
+					[NSNumber numberWithInt:2],
+					//[6]	Attack Type [0 = slash][1 = bash][2 = pierce]
+					[NSNumber numberWithInt:1],
 					//[7]	S1	SPELL LV1
 					[NSNumber numberWithInt:1], 
 					//[8]	S2	SPELL LV2
@@ -55,19 +57,23 @@
 					//[10]	S4	SPELL LV4
 					[NSNumber numberWithInt:0],
 					//[11]	RED
-					[NSNumber numberWithInt:1],
-					//[12]	GREEN
 					[NSNumber numberWithInt:5],
-					//[13]	YELLOW
+					//[12]	GREEN
 					[NSNumber numberWithInt:4],
-					//[14]	BLUE
-					[NSNumber numberWithInt:2],
-					//[15]	PURPLE
+					//[13]	YELLOW
 					[NSNumber numberWithInt:3],
+					//[14]	BLUE
+					[NSNumber numberWithInt:1],
+					//[15]	PURPLE
+					[NSNumber numberWithInt:2],
 					//[16]	ATK
-					[NSNumber numberWithInt:17],
+					[NSNumber numberWithInt:16],
 					//[17]	DEF
-					[NSNumber numberWithInt:32],
+					[NSNumber numberWithInt:8],
+					//[18]	Weapon Tag
+					[NSNumber numberWithInt:1],
+					//[19]	Armor Tag
+					[NSNumber numberWithInt:1],
 					nil];
 			break;
 		case 2: //STRATAGIST
@@ -121,24 +127,46 @@
 //Takes in a int value representing class being 
 //checked for skills learnable.
 //[0] = Defender	[1] = Knight
--(NSArray*)GetSkillsLearnableOfClass:(NSNumber*)classTag{
-	NSArray* skills = 0;
+-(NSMutableArray*)GetSkillsLearnableOfClass:(int)classTag whileType:(int)typeTag{
+	NSMutableArray* Skills = 0;
 	
-	switch ([classTag intValue]) {
+	switch (classTag) {
 		case 1:
-			//Class Defender
-			skills = [NSArray arrayWithObjects:
-					  [[PhysicalSkill alloc] initSkillWithTag:0],
-					  [[PhysicalSkill alloc] initSkillWithTag:0],
-					  nil];
+			NSLog(@"fetch berserker skills");
+			//Class Berserker
+			if(typeTag == 0){
+				Skills = [NSMutableArray arrayWithObjects:
+						  [[PhysicalBasicSkill alloc] initSkillWithTag:10],
+						  [[PhysicalBasicSkill alloc] initSkillWithTag:20],
+						  [[PhysicalBasicSkill alloc] initSkillWithTag:30],
+						  [[PhysicalBasicSkill alloc] initSkillWithTag:40],
+						  nil];
+			}else if(typeTag == 1){
+				Skills = [NSMutableArray arrayWithObjects:
+						  [[PhysicalPassiveSkill alloc] initSkillWithTag:0 andLevel:0 andIsFixed:false],
+						  [[PhysicalPassiveSkill alloc] initSkillWithTag:1 andLevel:0 andIsFixed:false],
+						  [[PhysicalPassiveSkill alloc] initSkillWithTag:2 andLevel:0 andIsFixed:false],
+						  [[PhysicalPassiveSkill alloc] initSkillWithTag:3 andLevel:0 andIsFixed:false],
+						  [[PhysicalPassiveSkill alloc] initSkillWithTag:4 andLevel:0 andIsFixed:false],
+						  [[PhysicalPassiveSkill alloc] initSkillWithTag:5 andLevel:0 andIsFixed:false],
+						  nil];
+			}else{
+				Skills = [NSMutableArray arrayWithObjects:
+						  [[PhysicalActiveSkill alloc] initSkillWithTag:0 andLevel:2 andIsFixed:false],
+						  [[PhysicalActiveSkill alloc] initSkillWithTag:1 andLevel:2 andIsFixed:false],
+						  [[PhysicalActiveSkill alloc] initSkillWithTag:2 andLevel:2 andIsFixed:false],
+						  [[PhysicalActiveSkill alloc] initSkillWithTag:3 andLevel:2 andIsFixed:false],
+						  [[PhysicalActiveSkill alloc] initSkillWithTag:4 andLevel:2 andIsFixed:false],
+						  [[PhysicalActiveSkill alloc] initSkillWithTag:5 andLevel:2 andIsFixed:false],
+						  nil];
+			}
+			
 			break;
 			
 		case 2:
 			//Class Stratagist
-			skills = [NSArray arrayWithObjects:
-					  [[PhysicalSkill alloc] initSkillWithTag:0],
-					  [[PhysicalSkill alloc] initSkillWithTag:0],
-					  nil];
+			Skills = [NSArray arrayWithObjects:
+						nil];
 			break;
 			
 		default:
@@ -146,14 +174,14 @@
 			NSLog (@"Class inputted out of range");
 			break;
 	}
-	
-	return skills;
+	NSLog(@"Skills has %d entries", [Skills count]);
+	return Skills;
 }
 
--(NSArray*)GetStartingEquipmentOfClass:(NSNumber*)classTag{
+-(NSArray*)GetStartingEquipmentOfClass:(int)classTag{
 	NSArray* startingEquips = 0;
 	
-	switch ([classTag intValue]) {
+	switch (classTag) {
 		case 1:
 			//Class Defender
 			startingEquips = [NSArray arrayWithObjects:
@@ -188,6 +216,36 @@
 			break;
 	}
 	return 0;
+	
 }
+
+-(ccColor3B)getSoulColor:(int)classTag{
+	NSArray* stats = [self GetClassStatInfoOfClass:classTag];
+	float r = 85;
+	float g = 85;
+	float b = 85;
+	
+	float RED = [[stats objectAtIndex:11] floatValue];
+	float GREEN = [[stats objectAtIndex:12] floatValue];
+	float YELLOW = [[stats objectAtIndex:13] floatValue];
+	float BLUE = [[stats objectAtIndex:14] floatValue];
+	float PURPLE = [[stats objectAtIndex:15] floatValue];
+	
+	float total = RED + GREEN + YELLOW + BLUE + PURPLE;
+	
+	r = r + ((RED / total) * 170);
+	g = g + ((GREEN / total) * 170);
+	b = b + ((BLUE / total) * 170);
+	
+	r = r + ((YELLOW / total) * 170);
+	g = g + ((YELLOW / total) * 170);
+	
+	r = r + ((PURPLE / total) * 170);
+	b = b + ((PURPLE / total) * 170);
+	
+	NSLog(@"R:%f, G:%f, B:%f", r, g, b);
+	return ccc3(r, g, b);
+}
+
 
 @end

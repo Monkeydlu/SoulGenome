@@ -40,4 +40,60 @@
 	return rt;
 }
 
++(void) learnedABasicSkill:(int)skillTag onCharacter:(PhysicalCharacter *)character{
+	switch (skillTag) {
+		case 1: //  HP UP I (0/10)
+			
+			break;
+		case 2: //  HP UP II (0/10)
+			
+			break;
+		case 3: //  HP UP III (0/10)
+			
+			break;
+		case 10:  // TP•1 UP I (0/5)
+			[character techPointsAdjustOfTeir:1 modifier:1];
+			break;
+		case 11:  // TP•1 UP II (0/3)
+			[character techPointsAdjustOfTeir:1 modifier:2];
+			break;
+		case 20:  // TP•2 UP I (0/5)
+			[character techPointsAdjustOfTeir:2 modifier:1];
+			break;
+		case 21:  // TP•2 UP II (0/4)
+			[character techPointsAdjustOfTeir:2 modifier:2];
+			break;
+		case 30:  // TP•3 UP I (0/5)
+			[character techPointsAdjustOfTeir:3 modifier:1];
+			break;
+		case 31:  // TP•3 UP II (0/3)
+			[character techPointsAdjustOfTeir:3 modifier:2];
+			break;
+		case 40: // TP•4 UP I (0/5)
+			[character techPointsAdjustOfTeir:4 modifier:1];
+			break;
+		default:
+			NSLog(@"learned invalid basic skill");
+			break;
+	}
+}
+
++(void) learnedAPassiveSkill:(int)skillTag onCharacter:(PhysicalCharacter *)character{
+	switch (skillTag) {
+		case 3:
+			[character increaseMaxHp:20];
+			break;
+		default:
+			break;
+	}
+}
+
++(void) learnedAActiveSkill:(int)skillTag onCharacter:(PhysicalCharacter *)character{
+	switch (skillTag) {
+		
+		default:
+			break;
+	}
+}
+
 @end

@@ -11,82 +11,28 @@
 
 @implementation PhysicalRoom
 
-- (id)initWithPosition:(int)pos andType:(int)type{
-	if((self = [super initWithFile:@"RoomHidden.png"])) {
-		roomType =  type;
-		roomState = 1;
-		[self setRoomPosition:pos];
+- (void)setUpHelperWithWithType:(NSNumber *)type andRoomNumber:(int)number{
+	if ([type intValue] >= 0) {
+		[self setNormalImage:[CCSprite spriteWithFile:@"RoomHidden.png"]];
+		[self setSelectedImage:[CCSprite spriteWithFile:@"RoomHidden.png"]];
 	}
-	return self;
-}
-
-- (void)setRoomPosition:(int)pos{
-	switch (pos) {
-		case 10:
-			self.position = ccp(155,250);
-			break;
-		case 11:
-			self.position = ccp(215,250);
-			break;
-		case 12:
-			self.position = ccp(275,250);
-			break;
-		case 13:
-			self.position = ccp(335,250);
-			break;
-		case 20:
-			self.position = ccp(155,190);
-			break;
-		case 21:
-			self.position = ccp(215,190);
-			break;
-		case 22:
-			self.position = ccp(275,190);
-			break;
-		case 23:
-			self.position = ccp(335,190);
-			break;
-		case 30:
-			self.position = ccp(155,130);
-			break;
-		case 31:
-			self.position = ccp(215,130);
-			break;
-		case 32:
-			self.position = ccp(275,130);
-			break;
-		case 33:
-			self.position = ccp(335,130);
-			break;
-		case 40:
-			self.position = ccp(155,70);
-			break;
-		case 41:
-			self.position = ccp(215,70);
-			break;
-		case 42:
-			self.position = ccp(275,70);
-			break;
-		case 43:
-			self.position = ccp(335,70);
-			break;
-		default:
-			break;
-	}
+	roomType = [type intValue];
+	roomState = 1;
+	roomNumber = number;
 }
 
 -(void)updateStatus{
 	
-	if (roomState ==1) {
+	if (roomState == 1 && roomType != -1) {
 		roomState = 2;
-		[self setTexture:[[CCSprite spriteWithFile:@"RoomReady.png"]texture]];
+		[self setNormalImage:[CCSprite spriteWithFile:@"RoomReady.png"]];
 	}
 	
 }
 
 -(void)revealRoom{
 	roomState = 3;
-	[self setTexture:[[CCSprite spriteWithFile:@"RoomRevealed.png"]texture]];
+	[self setNormalImage:[CCSprite spriteWithFile:@"RoomRevealed.png"]];
 }
 
 -(int)getRoomType{
@@ -95,6 +41,10 @@
 
 -(int)getRoomState{
 	return roomState;
+}
+
+-(int)getRoomNumber{
+	return roomNumber;
 }
 
 @end

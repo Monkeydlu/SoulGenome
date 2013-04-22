@@ -10,32 +10,35 @@
 
 @implementation PhysicalEnemyDummy
 
-- (id)initWithTag:(int)foo andPos:(int)position{
-	if((self = [super initWithFile:@"Enemy.png"])) {
-		[self setUpEnemy:foo];
-		
-		myPosition = position;
-		[self updatePosition:position];
-		
-		behaviorCounter = 0;
+-(void)defineImageFile:(int)foo{
+	
+	switch (foo) {
+		case 1:
+			imageFileName = @"Enemy.png";
+			imageFileNamePressed = @"EnemyPressed.png";
+			break;
+		default:
+			break;
 	}
-	return self;
 }
 
 -(void)setUpEnemy:(int)monsterTag{
 	switch (monsterTag) {
-		case 1: //temorary monster chocobo
-			timerMax = 7;
+		case 1: //temorary monster frog
+			timerMax = 5.5;
 			timerCur = 0;
 			isAlive = true;
-			HpMax = 40;
-			HpCur = 40;
+			HpMax = 30;
+			HpCur = 30;
 			
-			Atk = 8;
+			Atk = 20;
 			Def = 5;
-			Res = 3;
 			
-			behaviorPattern = [NSMutableArray arrayWithObjects:@"move", @"attack" nil];
+			for (int i = 0; i < 10; i++) {
+				behavior[i] = 1;
+			}
+			behavior[0] = 0;
+			behavior[4] = 0;
 			break;
 		case 2:
 			
@@ -45,72 +48,122 @@
 	}
 }
 
--(void)updatePosition:(int)position{
-	myPosition = position;
-	switch (myPosition) {
-		case 11:
-			self.position = ccp(150,160 + 52 + 5);
+- (id)initWithTag:(int)foo andName:(NSString*)nameTag andPosition:(int)positonTag{
+	[self defineImageFile:foo];
+	
+	if((self = [super initWithFile:imageFileName])) {
+		[self setUpEnemy:foo];
+		
+		name = nameTag;
+		
+		ActionCounter = 0;
+		position = positonTag;
+		
+		state = kButtonStateNotPressed;
+	}
+	return self;
+}
+
+
+//==============================================//
+
+- (CGRect)rect
+{
+	CGSize s = [self.texture contentSize];
+	return CGRectMake(-s.width / 2, -s.height / 2, s.width, s.height);
+}
+
++ (id)spuButtonWithTexture:(CCTexture2D *)normalTexture
+{
+	return [[[self alloc] initWithTexture:normalTexture] autorelease];
+}
+
+- (BOOL)isPressed {
+	if (state == kButtonStateNotPressed) return NO;
+	if (state == kButtonStatePressed) return YES;
+	return NO;
+}
+
+- (BOOL)isNotPressed {
+	if (state == kButtonStateNotPressed) return YES;
+	if (state == kButtonStatePressed) return NO;
+	return YES;
+}
+
+
+- (void)onEnter
+{
+	[[CCTouchDispatcher sharedDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
+	[super onEnter];
+}
+
+- (void)onExit
+{
+	[[CCTouchDispatcher sharedDispatcher] removeDelegate:self];
+	[super onExit];
+}   
+
+- (BOOL)containsTouchLocation:(UITouch *)touch
+{
+	return CGRectContainsPoint(self.rect, [self convertTouchToNodeSpaceAR:touch]);
+}
+
+- (BOOL)ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
+{
+	if (state == kButtonStatePressed) return NO;
+	if ( ![self containsTouchLocation:touch] ) return NO;
+	if (buttonStatus == kButtonStatusDisabled) return NO;
+	
+	state = kButtonStatePressed;
+	[self setTexture:[[CCSprite spriteWithFile:imageFileNamePressed]texture]];
+	
+	BattleLayer * myParent = (BattleLayer *)[self parent];
+	switch (position) {
+		case 1:
+			[myParent Enemy1Selected];
 			break;
-		case 12:
-			self.position = ccp(150,160 + 5);
+		case 2:
+			[myParent Enemy2Selected];
 			break;
-		case 13:
-			self.position = ccp(150,160 - 52 + 5);
+		case 3:
+			[myParent Enemy3Selected];
 			break;
-		case 21:
-			self.position = ccp(196,160 + 26 + 52 + 5);
-			break;
-		case 22:
-			self.position = ccp(196,160 + 26 + 5);
-			break;
-		case 23:
-			self.position = ccp(196,160 - 26 + 5);
-			break;
-		case 24:
-			self.position = ccp(196,160 - 26 - 52 + 5);
-			break;
-		case 31:
-			self.position = ccp(242,160 + 52 + 52 + 5);
-			break;
-		case 32:
-			self.position = ccp(242,160 + 52 + 5);
-			break;
-		case 33:
-			self.position = ccp(242,160 + 5);
-			break;
-		case 34:
-			self.position = ccp(242,160 - 52 + 5);
-			break;
-		case 35:
-			self.position = ccp(242,160 - 52 - 52 + 5);
-			break;
-		case 42:
-			self.position = ccp(288,160 + 26 + 52 + 5);
-			break;
-		case 43:
-			self.position = ccp(288,160 + 26 + 5);
-			break;
-		case 44:
-			self.position = ccp(288,160 - 26 + 5);
-			break;
-		case 45:
-			self.position = ccp(288,160 - 26 - 52 + 5);
-			break;
-		case 53:
-			self.position = ccp(334,160 + 52 + 5);
-			break;
-		case 54:
-			self.position = ccp(334,160 + 5);
-			break;
-		case 55:
-			self.position = ccp(334,160 - 52 + 5);
+		case 4:
+			[myParent Enemy4Selected];
 			break;
 		default:
-			NSLog(@"position out of range");
 			break;
-
 	}
+	return YES;
 }
+
+- (void)ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
+{
+	// If it weren't for the TouchDispatcher, you would need to keep a reference
+	// to the touch from touchBegan and check that the current touch is the same
+	// as that one.
+	// Actually, it would be even more complicated since in the Cocos dispatcher
+	// you get NSSets instead of 1 UITouch, so you'd need to loop through the set
+	// in each touchXXX method.
+	
+	if ([self containsTouchLocation:touch]) return;
+	//if (buttonStatus == kButtonStatusDisabled) return NO;
+	
+	state = kButtonStateNotPressed;
+	[self setTexture:[[CCSprite spriteWithFile:imageFileName]texture]];
+	
+}
+
+- (void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
+{
+	
+	state = kButtonStateNotPressed;
+	[self setTexture:[[CCSprite spriteWithFile:imageFileName]texture]];
+
+}
+
+//==============================================//
+
 
 -(void)updateTimer{
 	if (timerCur < timerMax && isAlive) {
@@ -119,11 +172,7 @@
 }
 
 -(bool)enemyIsReady{
-	return (timerCur == 0);
-}
-
--(int)getPosition{
-	return myPosition;
+	return (timerCur >= timerMax);
 }
 
 -(float)getTimerProgress{
@@ -135,9 +184,36 @@
 	timerCur = 0;
 }
 
--(NSString*)performAction{
-	return [behaviorPattern objectAtIndex:behaviorCounter];
-	behaviorCounter++;
+-(int)getAction{
+	return behavior[ActionCounter];
 }
+
+-(void)progressActionCounter{
+	ActionCounter++;
+}
+
+-(NSString*)getName{
+	return name;
+}
+
+-(int)getATK{
+	return Atk;
+}
+
+-(int)getDEF{
+	return Def;
+}
+
+-(void)takeDamage:(int)damage{
+	HpCur = HpCur - damage;
+	if (HpCur <= 0) {
+		isAlive = false;
+	}
+}
+
+-(bool)isDead{
+	return !isAlive;
+}
+
 
 @end

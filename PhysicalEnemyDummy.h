@@ -7,34 +7,54 @@
 //
 
 #import "cocos2d.h"
+#import "BattleSceneLayer.h"
 
-@interface PhysicalEnemyDummy : CCSprite {
-	int myPosition;
+typedef enum tagButtonState {
+	kButtonStatePressed,
+	kButtonStateNotPressed
+} ButtonState;
+
+typedef enum tagButtonStatus {
+	kButtonStatusEnabled,
+	kButtonStatusDisabled
+} ButtonStatus;
+
+@interface PhysicalEnemyDummy : CCSprite <CCTargetedTouchDelegate>{
 	float timerMax;
 	float timerCur;
 	bool isAlive;
-	
-	int behaviorCounter;
+	int position;
+	NSString* name;
+	NSString* imageFileName;
+	NSString* imageFileNamePressed;
 	
 	int HpMax;
 	int HpCur;
 	
 	int Atk;
 	int Def;
-	int Res;
 	
-	NSMutableArray * behaviorPattern;
+	int behavior[10];
 	
 	int ActionCounter;
 	
+	ButtonState state;
+	ButtonStatus buttonStatus;
+	
 }
--(id)initWithTag:(int)foo andPos:(int)position;
+-(id)initWithTag:(int)foo andName:(NSString*)nameTag andPosition:(int)positonTag;
 -(void)setUpEnemy:(int)monsterTag;
 -(void)updateTimer;
--(void)updatePosition:(int)position;
 -(bool)enemyIsReady;
--(int)getPosition;
 -(float)getTimerProgress;
 -(void)resetTimer;
--(NSString*)performAction;
+-(int)getAction;
+-(void)progressActionCounter;
+-(NSString*)getName;
+-(int)getATK;
+-(int)getDEF;
+-(void)takeDamage:(int)damage;
+-(bool)isDead;
+
+
 @end

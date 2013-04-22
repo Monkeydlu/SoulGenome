@@ -17,7 +17,7 @@
 	
 	
 }
--(PhysicalEquipment*)initEuipmentWithTag:(int)equipTag;
+-(PhysicalEquipment*)initEuipmentWithTag:(int)equipTag asArmor:(bool)isArmor;
 
 -(void)gainEquipment:(NSNumber*)Character;
 -(NSString*)getName;
